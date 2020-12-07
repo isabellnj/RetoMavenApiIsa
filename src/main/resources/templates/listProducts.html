@@ -12,10 +12,37 @@
 <body>
 
 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js">
+    </script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $("#locales").change(function() {
+                var selectedOption = $('#locales').val();
+                if (selectedOption != '') {
+                    window.location.replace('productoshtml?lang=' + selectedOption);
+                }
+            });
+        });
+    </script>
+
+    <div>
+        <div style="width: 100%; height: 40px; float: left; text-align: center;">
+        <p style=" border-bottom-color:#000000; border-bottom-style:dashed; border-bottom-width:2px; border-top-color:#000000; border-top-style:solid; border-top-width:1px;" >Ecommerce</p>
+        </div>
+        <div style="width: 30%; height: 40px; float: right ; text-align: center; margin-top: 35px;">
+    <span th:text="#{lang.change}">:</span>
+    <select id="locales">
+        <option value=""></option>
+        <option value="en" th:text="#{lang.en}"></option>
+        <option value="es" th:text="#{lang.es}"></option>
+    </select>
+    </div>
+    </div>
+
 
 
     <div class="card text-white bg-danger mb-3"  th:object="${order}" style="max-width: 18rem;">
-        <div class="card-header"></div>
+        <div class="card-header" th:text="#{Shopping.cart}"></div>
         <div class="card-body">
           <h5 class="card-title"  th:text="*{order.name}"  ></h5>
           <p class="card-text" th:text="*{order.date}" ></p>
@@ -24,7 +51,7 @@
           <ul>
             <li th:each="product: *{products}" th:text="${product.name}"></li>
         </ul>
-        <a href="#" class="btn btn-primary">checkout</a>
+        <a href="#" class="btn btn-primary" th:text="#{Checkout}" ></a>
         </div>
       </div>
    
@@ -36,8 +63,8 @@
         <div class="card-body">
           <h5 class="card-title" th:text="*{product.precio}"  >Card title</h5>
           <p class="card-text" th:text="*{product.name}" ></p>
-          <a href="#" class="btn btn-primary" th:if="*{product.id == 0}" >Add from cart</a>
-          <a href="#" class="btn btn-primary" th:unless="*{product.id == 0}" >delete from cart</a>
+          <a href="#" class="btn btn-primary" th:if="*{product.id == 0}" th:text="#{Add.to.cart}">Add from cart</a>
+          <a href="#" class="btn btn-primary" th:unless="*{product.id == 0}" th:text="#{Remove.from.cart}"></a>
           <!-- <a href="#" class="btn btn-primary" th:unless="*{#list.contains($(order.ids), product.id)">Remove from cart</a> -->
         </div>
       </div>
