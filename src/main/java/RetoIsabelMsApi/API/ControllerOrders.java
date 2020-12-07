@@ -43,7 +43,13 @@ public class ControllerOrders {
 
 
 
-  
+    //Ejercicio3 --> sacar lista
+    @GetMapping("/orders")
+    public List<Order> getall(){
+
+        return listado;
+    }
+
 
   
   

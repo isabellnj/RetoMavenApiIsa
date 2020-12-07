@@ -20,5 +20,21 @@ public class ControllerProducts {
     ));
 
 
+    //Ejercicio3 --> sacar lista
+    @GetMapping("/products")
+    public List<Product> getall(){
+
+        return listado;
+    }
+
+    @GetMapping("/producto/{id}")
+    public static Product getById(@PathVariable("id") final int id) {
+        for (final Product producto: listado){
+            if (producto.getId() == id){
+                return producto;                
+            }
+        }
+        return null;
+    }
     
 }

@@ -27,7 +27,12 @@ public class ControllerOrderProduct {
 
     
 
-   
+         //Ejercicio3 --> sacar lista
+    @GetMapping("/ordersProducts")
+    public List<OrderProduct> getall(){
+
+        return listado;
+    }
     
 
     
