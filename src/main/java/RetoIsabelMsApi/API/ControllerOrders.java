@@ -137,6 +137,42 @@ public class ControllerOrders {
    
     
 
+    //-	Permite editar un pedido añadiendo o eliminando productos en ese pedido
+   @PutMapping("/orderss/{id}")
+   public static Order Update(@RequestBody OrderFull order, @PathVariable("id") int id) {
+      
+       for (Order orderr : listado) {
+        
+           if (orderr.getId() == id) {
+               orderr.setDate(order.getDate());
+               orderr.setName(order.getName());
+               orderr.setState(order.getState());
+
+
+               for (int i = 0; i < ControllerOrderProduct.listado.size(); i++) {
+                   OrderProduct orderProduct = ControllerOrderProduct.listado.get(i);
+                   if (orderProduct.getOrder().getId() == id) {
+                       ControllerOrderProduct.listado.remove(orderProduct);
+                    }
+          
+               }
+              
+           //no
+
+           }
+
+            for (Map.Entry<Integer, Integer> producto : order.getProductos().entrySet()) {
+               Product p = ControllerProducts.getById(producto.getKey());
+               OrderProduct op = new OrderProduct(orderr, p, producto.getValue());
+               ControllerOrderProduct.listado.add(op);
+
+           }
+         }
+         return null;
+           
+       
+   }
+
 
 
 
