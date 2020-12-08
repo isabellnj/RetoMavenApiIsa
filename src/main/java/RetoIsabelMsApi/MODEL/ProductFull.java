@@ -9,7 +9,7 @@ import RetoIsabelMsApi.MODEL.Order.estados;
 
 //import com.example.RetoIsabelMS.MODEL.Order.estados;
 
-public class OrderFull {
+public class ProductFull {
     
    
 

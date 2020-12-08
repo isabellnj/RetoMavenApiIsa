@@ -17,15 +17,18 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import RetoIsabelMsApi.MODEL.Order;
-import RetoIsabelMsApi.MODEL.OrderFull;
+import RetoIsabelMsApi.MODEL.ProductFull;
 import RetoIsabelMsApi.MODEL.OrderProduct;
 import RetoIsabelMsApi.MODEL.OrderProductFull;
 import RetoIsabelMsApi.MODEL.Product;
+import RetoIsabelMsApi.MODEL.ProductCantidad;
+import RetoIsabelMsApi.MODEL.ProductEdit;
 import RetoIsabelMsApi.MODEL.Order.estados;
 
 
@@ -62,24 +65,18 @@ public class ControllerOrders {
    
     @GetMapping("/order/{id}")
     public static OrderProductFull orderById(@PathVariable("id") final int id) {
-       OrderProduct o1= new OrderProduct();
-       int cant = 0;
         for (final Order order: listado){
             if (order.getId() == id){
-                ArrayList<Product> products= new ArrayList<Product>();
+                ArrayList<ProductCantidad> products= new ArrayList<ProductCantidad>();
                 
                 for (final OrderProduct orderProduct : ControllerOrderProduct.listado) {
-                    if (orderProduct.getOrder().getId() == id) {
+                    if (orderProduct.getOrder().getId() == id) {                        
                         
- 
-                        products.add(orderProduct.getProduct());
-                        cant = orderProduct.getQuantity();
-                        
+                        products.add(new ProductCantidad(orderProduct.getProduct(), orderProduct.getQuantity()));
                      
                     }
                 }
-                return new OrderProductFull(order, products, cant );
-                
+                return new OrderProductFull(order, products);                
             }
          }
  
@@ -93,7 +90,7 @@ public class ControllerOrders {
     //al menos, el ID en la petición para poder comprobar que toda la información se ha insertado correctamente.
  
     @PostMapping("/orderp")
-    public int add(@RequestBody OrderFull order) {
+    public int add(@RequestBody ProductFull order) {
         Order o = new Order(order.getDate(), order.getName(), order.getState());
         listado.add(o);
         for (Map.Entry<Integer, Integer> producto : order.getProductos().entrySet()) {
@@ -139,38 +136,24 @@ public class ControllerOrders {
 
     //-	Permite editar un pedido añadiendo o eliminando productos en ese pedido
    @PutMapping("/orderss/{id}")
-   public static Order Update(@RequestBody OrderFull order, @PathVariable("id") int id) {
-      
-       for (Order orderr : listado) {
+   public static void Update(@RequestBody ProductEdit product, @PathVariable("id") int id) {
+        for (Order orderr : listado) {
         
-           if (orderr.getId() == id) {
-               orderr.setDate(order.getDate());
-               orderr.setName(order.getName());
-               orderr.setState(order.getState());
-
-
-               for (int i = 0; i < ControllerOrderProduct.listado.size(); i++) {
-                   OrderProduct orderProduct = ControllerOrderProduct.listado.get(i);
-                   if (orderProduct.getOrder().getId() == id) {
-                       ControllerOrderProduct.listado.remove(orderProduct);
-                    }
-          
-               }
-              
-           //no
-
-           }
-
-            for (Map.Entry<Integer, Integer> producto : order.getProductos().entrySet()) {
-               Product p = ControllerProducts.getById(producto.getKey());
-               OrderProduct op = new OrderProduct(orderr, p, producto.getValue());
-               ControllerOrderProduct.listado.add(op);
-
-           }
-         }
-         return null;
-           
-       
+            if (orderr.getId() == id) {
+                for (int i = 0; i < ControllerOrderProduct.listado.size(); i++) {
+                    OrderProduct orderProduct = ControllerOrderProduct.listado.get(i);
+                    if (orderProduct.getOrder().getId() == id && orderProduct.getProduct().getId() == product.getId()) {                    
+                        ControllerOrderProduct.listado.remove(orderProduct);
+                    }                               
+                }
+            
+                if (product.getCantidad() > 0) {
+                    Product p = ControllerProducts.getById(product.getId());
+                    OrderProduct op = new OrderProduct(orderr, p, product.getCantidad());
+                    ControllerOrderProduct.listado.add(op);
+                } 
+            }            
+        }      
    }
 
 

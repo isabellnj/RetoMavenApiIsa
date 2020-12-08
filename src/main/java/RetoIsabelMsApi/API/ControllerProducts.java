@@ -16,7 +16,10 @@ import RetoIsabelMsApi.MODEL.Product;
 public class ControllerProducts {
     public static ArrayList<Product>listado = new ArrayList<Product>(Arrays.asList(
         new Product("helado", 2, "helado.jpg"),
-        new Product("avena", 3, "avena.jpg" )
+        new Product("avena", 3, "avena.jpg" ),
+        new Product("yogur de avena", 4, "avena.jpg"),
+        new Product("yogur de helado", 5, "helado.jpg"),
+        new Product("helado de avena", 5, "helado.jpg")
     ));
 
 

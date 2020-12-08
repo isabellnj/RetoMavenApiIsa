@@ -15,23 +15,15 @@ public class OrderProductFull {
     
   
    private Order order;
-   private ArrayList<Product>products;
-   private int cantidad;
-
+   private ArrayList<ProductCantidad>products;
 
    public OrderProductFull() {
-    }
+   }
 
-
-   
-    public OrderProductFull(Order order, ArrayList<Product> products, int i) {
-        this.order = order;
-        this.products = products;
-        this.cantidad = i;
-    }
-   
-
-
+   public OrderProductFull(Order order, ArrayList<ProductCantidad> products) {
+       this.order = order;
+       this.products = products;
+   }
 
    public Order getOrder() {
        return order;
@@ -41,21 +33,16 @@ public class OrderProductFull {
        this.order = order;
    }
 
-   public ArrayList<Product> getProducts() {
+   public ArrayList<ProductCantidad> getProducts() {
        return products;
    }
 
-   public void setProductos(ArrayList<Product> products) {
+   public void setProducts(ArrayList<ProductCantidad> products) {
        this.products = products;
    }
 
-   public int getCantidad() {
-       return cantidad;
-   }
 
-   public void setCantidad(int cantidad) {
-       this.cantidad = cantidad;
-   }
+   
 
  
   
