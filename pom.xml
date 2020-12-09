@@ -42,8 +42,7 @@
     <plugins> 
       <plugin> 
         <groupId>org.springframework.boot</groupId>  
-        <artifactId>spring-boot-maven-plugin</artifactId>
-       
+        <artifactId>spring-boot-maven-plugin</artifactId> 
       </plugin>  
       <plugin> 
         <groupId>com.microsoft.azure</groupId>  
@@ -52,7 +51,7 @@
         <configuration> 
           <schemaVersion>V2</schemaVersion>  
           <resourceGroup>RetoIsabelMsApi-1607311231117-rg</resourceGroup>  
-          <appName>isabel-2daw-springboot</appName>  
+          <appName>isabel-2daw-springbootttt</appName>  
           <pricingTier>B1</pricingTier>  
           <region>westeurope</region>  
           <runtime> 
