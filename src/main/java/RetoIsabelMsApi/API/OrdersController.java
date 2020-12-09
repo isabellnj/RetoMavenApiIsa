@@ -37,7 +37,7 @@ import RetoIsabelMsApi.MODEL.Order.estados;
 
 
 @RestController
-public class ControllerOrders {
+public class OrdersController {
     
 
     public static List<Order>listado = new ArrayList<Order>(Arrays.asList(
@@ -62,6 +62,10 @@ public class ControllerOrders {
 
     //Devuelve la información de un pedido concreto y sus productos asociados a través del ID del pedido.
 
+
+
+
+   
    
     @GetMapping("/order/{id}")
     public static OrderProductFull orderById(@PathVariable("id") final int id) {
@@ -69,9 +73,11 @@ public class ControllerOrders {
             if (order.getId() == id){
                 ArrayList<ProductCantidad> products= new ArrayList<ProductCantidad>();
                 
-                for (final OrderProduct orderProduct : ControllerOrderProduct.listado) {
+
+                for (final OrderProduct orderProduct : OrderProductController.listado) {
                     if (orderProduct.getOrder().getId() == id) {                        
-                        
+
+              
                         products.add(new ProductCantidad(orderProduct.getProduct(), orderProduct.getQuantity()));
                      
                     }
@@ -94,9 +100,9 @@ public class ControllerOrders {
         Order o = new Order(order.getDate(), order.getName(), order.getState());
         listado.add(o);
         for (Map.Entry<Integer, Integer> producto : order.getProductos().entrySet()) {
-            Product p = ControllerProducts.getById(producto.getKey());
+            Product p = ProductsController.getById(producto.getKey());
             OrderProduct op = new OrderProduct(o, p, producto.getValue());
-            ControllerOrderProduct.listado.add(op);
+            OrderProductController.listado.add(op);
         }
  
        return o.getId();
@@ -109,10 +115,10 @@ public class ControllerOrders {
     public static Order getById(@PathVariable("id") final int id) {
         for (Order order : listado) {
             if (order.getId() == id) {
-                for (int i = 0; i < ControllerOrderProduct.listado.size(); i++) {
-                    OrderProduct orderProduct = ControllerOrderProduct.listado.get(i);
+                for (int i = 0; i < OrderProductController.listado.size(); i++) {
+                    OrderProduct orderProduct = OrderProductController.listado.get(i);
                     if (orderProduct.getOrder().getId() == id) {
-                        ControllerOrderProduct.listado.remove(orderProduct);
+                        OrderProductController.listado.remove(orderProduct);
                     }
                 }
                 listado.remove(order);
@@ -139,21 +145,23 @@ public class ControllerOrders {
    public static void Update(@RequestBody ProductEdit product, @PathVariable("id") int id) {
         for (Order orderr : listado) {
         
+
             if (orderr.getId() == id) {
-                for (int i = 0; i < ControllerOrderProduct.listado.size(); i++) {
-                    OrderProduct orderProduct = ControllerOrderProduct.listado.get(i);
+                for (int i = 0; i < OrderProductController.listado.size(); i++) {
+                    OrderProduct orderProduct = OrderProductController.listado.get(i);
                     if (orderProduct.getOrder().getId() == id && orderProduct.getProduct().getId() == product.getId()) {                    
-                        ControllerOrderProduct.listado.remove(orderProduct);
+                        OrderProductController.listado.remove(orderProduct);
                     }                               
                 }
             
                 if (product.getCantidad() > 0) {
-                    Product p = ControllerProducts.getById(product.getId());
+                    Product p = ProductsController.getById(product.getId());
                     OrderProduct op = new OrderProduct(orderr, p, product.getCantidad());
-                    ControllerOrderProduct.listado.add(op);
+                    OrderProductController.listado.add(op);
                 } 
             }            
         }      
+
    }
 
 
