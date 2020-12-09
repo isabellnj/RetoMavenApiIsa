@@ -13,7 +13,7 @@ import RetoIsabelMsApi.MODEL.Product;
 
 
 @RestController
-public class ControllerProducts {
+public class ProductsController {
     public static ArrayList<Product>listado = new ArrayList<Product>(Arrays.asList(
         new Product("helado", 2, "helado.jpg"),
         new Product("avena", 3, "avena.jpg" )

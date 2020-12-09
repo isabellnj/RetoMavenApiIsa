@@ -14,13 +14,13 @@ import java.util.List;
 
 
 @RestController
-public class ControllerOrderProduct {
+public class OrderProductController {
   
     public static List<OrderProduct> listado = new ArrayList<OrderProduct>(Arrays.asList(
-        new OrderProduct(ControllerOrders.listado.get(0), ControllerProducts.listado.get(0), 4),
-        new OrderProduct(ControllerOrders.listado.get(1), ControllerProducts.listado.get(1), 40),
-        new OrderProduct(ControllerOrders.listado.get(0), ControllerProducts.listado.get(1), 400),
-        new OrderProduct(ControllerOrders.listado.get(1), ControllerProducts.listado.get(0), 444)
+        new OrderProduct(OrdersController.listado.get(0), ProductsController.listado.get(0), 4),
+        new OrderProduct(OrdersController.listado.get(1), ProductsController.listado.get(1), 40),
+        new OrderProduct(OrdersController.listado.get(0), ProductsController.listado.get(1), 400),
+        new OrderProduct(OrdersController.listado.get(1), ProductsController.listado.get(0), 444)
     ));
 
    

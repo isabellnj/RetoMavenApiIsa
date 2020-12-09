@@ -11,8 +11,8 @@ public class ModelViewProducts {
     @GetMapping("/productoshtml")
     public ModelAndView products(){
         ModelAndView modelo=new ModelAndView("listProducts");
-        modelo.addObject("products", ControllerProducts.listado);
-        modelo.addObject("order", ControllerOrders.orderById(1));
+        modelo.addObject("products", ProductsController.listado);
+        modelo.addObject("order", OrdersController.orderById(1));
        
         return modelo;
     }

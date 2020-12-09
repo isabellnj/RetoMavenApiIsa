@@ -34,7 +34,7 @@ import RetoIsabelMsApi.MODEL.Order.estados;
 
 
 @RestController
-public class ControllerOrders {
+public class OrdersController {
     
 
     public static List<Order>listado = new ArrayList<Order>(Arrays.asList(
@@ -68,7 +68,7 @@ public class ControllerOrders {
             if (order.getId() == id){
                 ArrayList<Product> products= new ArrayList<Product>();
                 
-                for (final OrderProduct orderProduct : ControllerOrderProduct.listado) {
+                for (final OrderProduct orderProduct : OrderProductController.listado) {
                     if (orderProduct.getOrder().getId() == id) {
                         
  
@@ -97,9 +97,9 @@ public class ControllerOrders {
         Order o = new Order(order.getDate(), order.getName(), order.getState());
         listado.add(o);
         for (Map.Entry<Integer, Integer> producto : order.getProductos().entrySet()) {
-            Product p = ControllerProducts.getById(producto.getKey());
+            Product p = ProductsController.getById(producto.getKey());
             OrderProduct op = new OrderProduct(o, p, producto.getValue());
-            ControllerOrderProduct.listado.add(op);
+            OrderProductController.listado.add(op);
         }
  
        return o.getId();
@@ -112,10 +112,10 @@ public class ControllerOrders {
     public static Order getById(@PathVariable("id") final int id) {
         for (Order order : listado) {
             if (order.getId() == id) {
-                for (int i = 0; i < ControllerOrderProduct.listado.size(); i++) {
-                    OrderProduct orderProduct = ControllerOrderProduct.listado.get(i);
+                for (int i = 0; i < OrderProductController.listado.size(); i++) {
+                    OrderProduct orderProduct = OrderProductController.listado.get(i);
                     if (orderProduct.getOrder().getId() == id) {
-                        ControllerOrderProduct.listado.remove(orderProduct);
+                        OrderProductController.listado.remove(orderProduct);
                     }
                 }
                 listado.remove(order);
@@ -149,10 +149,10 @@ public class ControllerOrders {
                orderr.setState(order.getState());
 
 
-               for (int i = 0; i < ControllerOrderProduct.listado.size(); i++) {
-                   OrderProduct orderProduct = ControllerOrderProduct.listado.get(i);
+               for (int i = 0; i < OrderProductController.listado.size(); i++) {
+                   OrderProduct orderProduct = OrderProductController.listado.get(i);
                    if (orderProduct.getOrder().getId() == id) {
-                       ControllerOrderProduct.listado.remove(orderProduct);
+                       OrderProductController.listado.remove(orderProduct);
                     }
           
                }
@@ -162,9 +162,9 @@ public class ControllerOrders {
            }
 
             for (Map.Entry<Integer, Integer> producto : order.getProductos().entrySet()) {
-               Product p = ControllerProducts.getById(producto.getKey());
+               Product p = ProductsController.getById(producto.getKey());
                OrderProduct op = new OrderProduct(orderr, p, producto.getValue());
-               ControllerOrderProduct.listado.add(op);
+               OrderProductController.listado.add(op);
 
            }
          }
